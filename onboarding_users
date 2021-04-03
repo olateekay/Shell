@@ -11,7 +11,7 @@ GROUP_NAME=developers
 SSH_SKEL=/etc/skel/.ssh/
 
 # variable for public key csv_file
-AUTH=autorized_keys
+AUTH=authorized_keys
 
 # password variable
 PASSWORD=password
@@ -46,11 +46,13 @@ while IFS= read USERNAME
          then
              echo $USERNAME already exists
          else
-             sudo useradd -m -G $GROUP_NAME -S /bin/bash $USERNAME
+             sudo useradd -m -G $GROUP_NAME -s /bin/bash $USERNAME
              sudo echo -e "$PASSWORD\n$PASSWORD"  | sudo passwd "${USERNAME}"
              sudo passwd -x 5 ${USERNAME}
              sudo chmod 700 /home/$USERNAME/.ssh
              sudo chmod 644 /home/$USERNAME/.ssh/$AUTH  
              echo "$USERNAME successfully created"
          fi
-    done < $CSV_FILE          
+    done < $CSV_FILE    
+
+exit 0      
